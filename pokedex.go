@@ -25,7 +25,6 @@ func pokemon(name string) {
 	resp, err := http.Get(url)
 	if resp.StatusCode == 404 {
 		fmt.Println("[!] No information found for that query :(")
-		time.Sleep(1 * time.Second)
 		decide()
 	}
 	if err != nil {
@@ -172,11 +171,17 @@ func console() {
 	banner()
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Println("Please Enter a Pokemon Name to Search: ")
-	name, _ := reader.ReadString('\n')
+	name, err := reader.ReadString('\n')
+	if err != nil {
+		fmt.Println(err)
+	}
+	if name == "\n" {
+		console()
+	}
 	name = strings.TrimFunc(name, func(r rune) bool {
 		return !unicode.IsLetter(r) && !unicode.IsNumber(r)
 	})
-	pokemon(name)
+	pokemon(strings.ToLower(name))
 }
 
 // Setup decision point to continue or exit after initial search
