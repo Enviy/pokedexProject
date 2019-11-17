@@ -8,9 +8,12 @@
    | |     \___/ |_|\_\___/\_____|___/ /  /  \  \
    |_|                                /__/    \__\
 </pre>
-Trying things out, trying to learn a little Go. Also there are Pokemon.
+This Pokedex project has been updated to include ascii art of all Pokemon as they're searched. If you're on MacOS, there's also some goofy voice action.
 
-I used the PokéAPI for everything in this project. 
+I used the PokéAPI for looking up Pokemon in this project. 
 It's pretty neat so if you're interested, check that out over at https://pokeapi.co/
 
-Included is the compiled executable, the .go script, and some of the testing snippets I was using to work out individual components. 
+I ascii art code is a reimplementation of the "image2ascii" package and client developed by Qeesung over at https://github.com/qeesung/image2ascii
+
+Additional work:
+- Add terminal frames for separate areas of Pokedex content. This will better organize the output.
