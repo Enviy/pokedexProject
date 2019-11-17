@@ -13,7 +13,7 @@ This Pokedex project has been updated to include ascii art of all Pokemon as the
 I used the PokéAPI for looking up Pokemon in this project. 
 It's pretty neat so if you're interested, check that out over at https://pokeapi.co/
 
-I ascii art code is a reimplementation of the "image2ascii" package and client developed by Qeesung over at https://github.com/qeesung/image2ascii
+The ascii art code is a reimplementation of the "convert" package developed by Qeesung as a part of "Image2Ascii" over at https://github.com/qeesung/image2ascii
 
 ![alt text](raichu.png)
 
