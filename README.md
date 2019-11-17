@@ -15,5 +15,7 @@ It's pretty neat so if you're interested, check that out over at https://pokeapi
 
 I ascii art code is a reimplementation of the "image2ascii" package and client developed by Qeesung over at https://github.com/qeesung/image2ascii
 
+![alt text](raichu.png)
+
 Additional work:
 - Add terminal frames for separate areas of Pokedex content. This will better organize the output.
