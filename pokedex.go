@@ -2,8 +2,10 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"image"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
@@ -13,6 +15,7 @@ import (
 	"strings"
 	"time"
 	"unicode"
+	"user/pokedexProject/convert"
 )
 
 func main() {
@@ -32,6 +35,8 @@ func pokemon(name string) {
 	}
 	defer resp.Body.Close()
 	contents, err := ioutil.ReadAll(resp.Body)
+	// get .png URL and generate ascii art
+	asciiArt := art(contents)
 
 	type Basics struct {
 		Name    string `json:"name"`
@@ -53,10 +58,14 @@ func pokemon(name string) {
 	// Extracts & prints Pokemon name & stats
 	f := Basics{}
 	_ = json.Unmarshal(contents, &f)
-	fmt.Println("Ah, the", f.Name)
+	fmt.Println(asciiArt)
+	intro := "Ah, the " + f.Name
+	oakLine(intro)
+	fmt.Println(intro)
 	url2 := f.Species.URL
 
-	fmt.Println("It reportedly has the base stats:")
+	aboutThat := "It's been observed with the base stats:"
+	fmt.Println(aboutThat)
 	for _, BasicEntry := range f.Stats {
 		fmt.Println(BasicEntry.Stat.Name, BasicEntry.BaseStat)
 	}
@@ -103,6 +112,7 @@ func pokemon(name string) {
 	}
 	for _, finalEntry := range finalS {
 		fmt.Println("\n", finalEntry)
+		oakLine(finalEntry)
 	}
 
 	// Ask user to choos other search or exit
@@ -195,5 +205,56 @@ func decide() {
 	} else if strings.Compare("no", text) == 0 {
 		callClear()
 		os.Exit(0)
+	} else {
+		decide()
+	}
+}
+
+// art will handle the extraction of the png URL and conversion to asciiArt
+func art(bite []byte) string {
+	type SpriteURLs struct {
+		Sprites struct {
+			BackDefault      string `json:"back_default"`
+			BackFemale       string `json:"back_female"`
+			BackShiny        string `json:"back_shiny"`
+			BackShinyFemale  string `json:"back_shiny_female"`
+			FrontDefault     string `json:"front_default"`
+			FrontFemale      string `json:"front_female"`
+			FrontShiny       string `json:"front_shiny"`
+			FrontShinyFemale string `json:"front_shiny_female"`
+		} `json:"sprites"`
+	}
+
+	imgs := SpriteURLs{}
+	_ = json.Unmarshal(bite, &imgs)
+	imgURL := imgs.Sprites.FrontDefault
+	response, _ := http.Get(imgURL)
+	defer response.Body.Close()
+	contents, _ := ioutil.ReadAll(response.Body)
+
+	// initialize convert options
+	dops := convert.DefaultOptions
+	options := &convert.Options{
+		Ratio:           dops.Ratio,
+		FixedWidth:      dops.FixedWidth,
+		FixedHeight:     dops.FixedHeight,
+		FitScreen:       dops.FitScreen,
+		StretchedScreen: dops.StretchedScreen,
+		Colored:         dops.Colored,
+		Reversed:        dops.Reversed,
+	}
+	converter := convert.NewImageConverter()
+	r := bytes.NewReader(contents)
+	img, _, err := image.Decode(r)
+	if err != nil {
+		fmt.Print("[!] Error converting bytes to img: ", err)
+	}
+	return converter.Image2ASCIIString(img, options)
+}
+
+func oakLine(message string) {
+	if runtime.GOOS == "darwin" {
+		cmd := exec.Command("say", message)
+		cmd.Run()
 	}
 }
