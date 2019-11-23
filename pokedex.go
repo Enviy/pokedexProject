@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/Enviy/pokedexProject/convert"
 	"image"
 	"io/ioutil"
 	"math/rand"
@@ -15,7 +16,6 @@ import (
 	"strings"
 	"time"
 	"unicode"
-	"user/pokedexProject/convert"
 )
 
 func main() {
@@ -60,8 +60,8 @@ func pokemon(name string) {
 	_ = json.Unmarshal(contents, &f)
 	fmt.Println(asciiArt)
 	intro := "Ah, the " + f.Name
-	oakLine(intro)
 	fmt.Println(intro)
+	oakLine(intro)
 	url2 := f.Species.URL
 
 	aboutThat := "It's been observed with the base stats:"
@@ -71,7 +71,10 @@ func pokemon(name string) {
 	}
 
 	// 2nd API call for flavor text
-	response, _ := http.Get(url2)
+	response, err := http.Get(url2)
+	if err != nil {
+		fmt.Println("[!] Error: ", err)
+	}
 	defer response.Body.Close()
 	contents2, _ := ioutil.ReadAll(response.Body)
 
@@ -116,7 +119,6 @@ func pokemon(name string) {
 	}
 
 	// Ask user to choos other search or exit
-	fmt.Println("\n")
 	decide()
 }
 
@@ -226,9 +228,15 @@ func art(bite []byte) string {
 	}
 
 	imgs := SpriteURLs{}
-	_ = json.Unmarshal(bite, &imgs)
+	err := json.Unmarshal(bite, &imgs)
+	if err != nil {
+		fmt.Println("[!] Error unmarsharling img URLs: ", err)
+	}
 	imgURL := imgs.Sprites.FrontDefault
-	response, _ := http.Get(imgURL)
+	response, err := http.Get(imgURL)
+	if err != nil {
+		fmt.Println("[!] Error in GET for img URLs: ", err)
+	}
 	defer response.Body.Close()
 	contents, _ := ioutil.ReadAll(response.Body)
 

@@ -1,11 +1,10 @@
-// Package convert can convert a image to ascii string or matrix
 package convert
 
 import (
 	"bytes"
+	"github.com/Enviy/pokedexProject/ascii"
 	"image"
 	"image/color"
-	"user/pokedexProject/ascii"
 	// Support decode jpeg image
 	_ "image/jpeg"
 	// Support deocde the png image
