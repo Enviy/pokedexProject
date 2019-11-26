@@ -1,4 +1,4 @@
-# pokedex_project
+# pokedexProject
 <pre>
    __ ___         _            __     ___      ___
    | '_  \       | |           | |    \  \    /  /
@@ -18,4 +18,4 @@ The ascii art code is a reimplementation of the "convert" package developed by Q
 ![alt text](raichu.png)
 
 Additional work:
-- Add terminal frames for separate areas of Pokedex content. This will better organize the output.
+- Add terminal frames to separate areas of Pokedex content. This will better organize the output.
