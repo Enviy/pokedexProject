@@ -31,7 +31,7 @@ func pokemon(name string) {
 		decide()
 	}
 	if err != nil {
-		fmt.Println("[!] There was an error!", err)
+		fmt.Println("[!] Error in GET request: ", err)
 	}
 	defer resp.Body.Close()
 	contents, err := ioutil.ReadAll(resp.Body)
