@@ -18,6 +18,7 @@ The ascii art code is a reimplementation of the "convert" package developed by Q
 ![alt text](raichu.png)
 
 UPDATE:
+
 A working sample GoFx microservice webapp is now included under the pokeService directory. The intent here was to see if I could provide the Pokédex terminal experience through a web browser and through an API endpoint so people wouldn't need the binary.
 
 Unfortunately this was not successful because of the ANSI escape characters that make the colored ASCII possible. That requires the conversion to take place in the client side terminal. Even requesting the data from the API endpoint and displaying the converted ASCII in the local terminal did not fix this.
