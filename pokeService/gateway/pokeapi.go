@@ -32,7 +32,7 @@ var Module = fx.Provide(
 
 // PokeAPI interacts with poke api
 type PokeAPI interface {
-	GetFacts(pokemon string) (*Response, error)
+	GetFacts(pokemon string) (*maps.Response, error)
 	GetArt(url string) (string, error)
 	GetFlavor(url string) ([]string, error)
 }
@@ -46,20 +46,8 @@ func NewAPI(logger *zap.SugaredLogger) (PokeAPI, error) {
 	return &pokeapi{logger: logger}, nil
 }
 
-// Response defines output of GetFacts()
-type Response struct {
-	Name           string
-	Health         int
-	Attack         int
-	Defense        int
-	SpecialAttack  int
-	SpecialDefense int
-	Speed          int
-	FlavorText     []string
-}
-
 // GetFacts collects pokemon facts from pokemon api
-func (p *pokeapi) GetFacts(pokemon string) (*Response, error) {
+func (p *pokeapi) GetFacts(pokemon string) (*maps.Response, error) {
 	content, err := getContent(pokeURL+pokemon, p)
 	if err != nil {
 		p.logger.Error("GetFacts() Error in getContent()", err)
@@ -72,7 +60,7 @@ func (p *pokeapi) GetFacts(pokemon string) (*Response, error) {
 		p.logger.Error("GetFacts() Error in GetFlavor()", err)
 		return nil, err
 	}
-	response := Response{
+	response := maps.Response{
 		Name:           f.Name,
 		Health:         f.Stats[0].BaseStat,
 		Attack:         f.Stats[1].BaseStat,

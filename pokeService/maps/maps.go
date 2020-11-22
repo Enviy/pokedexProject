@@ -42,3 +42,15 @@ type SpriteURL struct {
 		FrontShinyFemale string `json:"front_shiny_female"`
 	} `json:"sprites"`
 }
+
+// Response defines output of GetFacts()
+type Response struct {
+	Name           string
+	Health         int
+	Attack         int
+	Defense        int
+	SpecialAttack  int
+	SpecialDefense int
+	Speed          int
+	FlavorText     []string
+}
