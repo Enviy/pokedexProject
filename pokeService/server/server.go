@@ -36,6 +36,8 @@ func server(
 
 	mux.HandleFunc("/", handler.Root)
 	mux.HandleFunc("/pokemon", handler.Pokemon)
+	mux.HandleFunc("/pokemon/facts", handler.Facts)
+	mux.HandleFunc("/pokemon/artwork", handler.Artwork)
 
 	lifecycle.Append(
 		fx.Hook{
