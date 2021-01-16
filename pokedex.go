@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/Enviy/pokedexProject/convert"
 	"image"
 	"io/ioutil"
 	"math/rand"
@@ -16,6 +15,8 @@ import (
 	"strings"
 	"time"
 	"unicode"
+
+	"github.com/Enviy/pokedexProject/convert"
 )
 
 func main() {
@@ -27,7 +28,7 @@ func pokemon(name string) {
 	url := "https://pokeapi.co/api/v2/pokemon/" + name
 	resp, err := http.Get(url)
 	if resp.StatusCode == 404 {
-		fmt.Println("[!] No information found for that query :(")
+		fmt.Println("[!] No information was found for that pokemon :(")
 		decide()
 	}
 	if err != nil {
@@ -182,7 +183,7 @@ func console() {
 	callClear()
 	banner()
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("Please Enter a Pokemon Name to Search: ")
+	fmt.Println("Please Search a Pokemon's Name: ")
 	name, err := reader.ReadString('\n')
 	if err != nil {
 		fmt.Println(err)
@@ -199,7 +200,7 @@ func console() {
 // Setup decision point to continue or exit after initial search
 func decide() {
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("Would you like to search another Pokemon? (yes/no)")
+	fmt.Println("Would you like to search for another Pokemon? (yes/no)")
 	text, _ := reader.ReadString('\n')
 	text = strings.Replace(text, "\n", "", -1)
 	if strings.Compare("yes", text) == 0 {
@@ -208,6 +209,8 @@ func decide() {
 		callClear()
 		os.Exit(0)
 	} else {
+		callClear()
+		banner()
 		decide()
 	}
 }
