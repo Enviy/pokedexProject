@@ -8,7 +8,6 @@ import (
 
 	httpMocks "github.com/Enviy/pokedexProject/pokeService/.gen/mocks/http"
 
-	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 )
 
@@ -17,8 +16,7 @@ type mockClients struct {
 }
 
 func setup(t *testing.T) (Handler, mockClients) {
-	handler, err := New(zap.S())
-	assert.NoError(t, err)
+	handler := New(zap.S())
 
 	ctrl := gomock.NewController(t)
 	mockRespWriter := httpMocks.NewMockResponseWriter(ctrl)

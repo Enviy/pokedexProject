@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/Enviy/pokedexProject/pokeService/gateway"
+	"github.com/Enviy/pokedexProject/pokeService/maps"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 )
@@ -28,8 +29,8 @@ type handler struct {
 }
 
 // New creates a new Handler
-func New(logger *zap.SugaredLogger) (Handler, error) {
-	return &handler{logger: logger}, nil
+func New(logger *zap.SugaredLogger) Handler {
+	return &handler{logger: logger}
 }
 
 // Root handles the root route
@@ -41,7 +42,7 @@ func (h *handler) Root(w http.ResponseWriter, r *http.Request) {
 func (h *handler) Pokemon(w http.ResponseWriter, r *http.Request) {
 	type combinedResponse struct {
 		Art   string
-		Facts *gateway.Response
+		Facts *maps.Response
 	}
 	if r.Method != http.MethodGet {
 		io.WriteString(w, "[!] Sorry, this isn't a GET request.")
