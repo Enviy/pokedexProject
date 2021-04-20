@@ -1,6 +1,6 @@
-package maps
+package pokemon
 
-// Basics parse basic pokemon data
+// Basics defines response from Base Get
 type Basics struct {
 	Name    string `json:"name"`
 	Order   int    `json:"order"`
@@ -18,19 +18,8 @@ type Basics struct {
 	} `json:"stats"`
 }
 
-// Flavor parse flavor text for pokemon
-type Flavor struct {
-	FlavorTextEntries []struct {
-		FlavorText string `json:"flavor_text"`
-		Language   struct {
-			Name string `json:"name"`
-			URL  string `json:"url"`
-		} `json:"language"`
-	} `json:"flavor_text_entries"`
-}
-
-// SpriteURL parse sprite URLs
-type SpriteURL struct {
+// SpriteURLs defines response from getting PNGs
+type SpriteURLs struct {
 	Sprites struct {
 		BackDefault      string `json:"back_default"`
 		BackFemale       string `json:"back_female"`
@@ -41,16 +30,4 @@ type SpriteURL struct {
 		FrontShiny       string `json:"front_shiny"`
 		FrontShinyFemale string `json:"front_shiny_female"`
 	} `json:"sprites"`
-}
-
-// Response defines output of GetFacts()
-type Response struct {
-	Name           string
-	Health         int
-	Attack         int
-	Defense        int
-	SpecialAttack  int
-	SpecialDefense int
-	Speed          int
-	FlavorText     []string
 }
