@@ -1,7 +1,7 @@
 package convert
 
 import (
-	"github.com/Enviy/pokedexProject/terminal"
+	"github.com/Enviy/pokedexProject/util"
 	"github.com/nfnt/resize"
 	"image"
 	"log"
@@ -10,7 +10,7 @@ import (
 // NewResizeHandler create a new resize handler
 func NewResizeHandler() ResizeHandler {
 	handler := &ImageResizeHandler{
-		terminal: terminal.NewTerminalAccessor(),
+		terminal: util.NewTerminalAccessor(),
 	}
 
 	initResizeResolver(handler)
@@ -89,7 +89,7 @@ type ResizeHandler interface {
 // ImageResizeHandler implement the ResizeHandler interface and
 // responsible for image resizing
 type ImageResizeHandler struct {
-	terminal           terminal.Terminal
+	terminal           util.Terminal
 	imageSizeResolvers []imageSizeResolver
 }
 
