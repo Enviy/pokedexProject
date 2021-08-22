@@ -29,6 +29,7 @@ _testmain.go
 *.dll
 *.test
 *.prof
+*.swp
 
 *.out
 secrets/secrets.yaml

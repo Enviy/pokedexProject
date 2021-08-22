@@ -1,6 +1,6 @@
-// Package ascii can convert a image pixel to a raw char
+// Package convert can convert a image pixel to a raw char
 // based on it's RGBA value.
-package ascii
+package convert
 
 import (
 	"github.com/aybabtme/rgbterm"
@@ -18,29 +18,29 @@ type CharPixel struct {
 	A    uint8
 }
 
-// Options convert pixel to raw char
-type Options struct {
+// ASCIIOptions convert pixel to raw char
+type ASCIIOptions struct {
 	Pixels   []byte
 	Reversed bool
 	Colored  bool
 }
 
-// DefaultOptions that contains the default pixels
-var DefaultOptions = Options{
+// ASCIIDefaultOptions that contains the default pixels
+var ASCIIDefaultOptions = ASCIIOptions{
 	Pixels:   []byte(" .,:;i1tfLCG08@"),
 	Reversed: false,
 	Colored:  true,
 }
 
 // NewOptions create a new convert option
-func NewOptions() Options {
-	newOptions := Options{}
-	newOptions.mergeOptions(&DefaultOptions)
+func NewOptions() ASCIIOptions {
+	newOptions := ASCIIOptions{}
+	newOptions.mergeOptions(&ASCIIDefaultOptions)
 	return newOptions
 }
 
 // mergeOptions merge two options
-func (options *Options) mergeOptions(newOptions *Options) {
+func (options *ASCIIOptions) mergeOptions(newOptions *ASCIIOptions) {
 	options.Pixels = append([]byte{}, newOptions.Pixels...)
 	options.Reversed = newOptions.Reversed
 	options.Colored = newOptions.Colored
@@ -53,8 +53,8 @@ func NewPixelConverter() PixelConverter {
 
 // PixelConverter define the convert pixel operation
 type PixelConverter interface {
-	ConvertPixelToASCII(pixel color.Color, options *Options) string
-	ConvertPixelToPixelASCII(pixel color.Color, options *Options) CharPixel
+	ConvertPixelToASCII(pixel color.Color, options *ASCIIOptions) string
+	ConvertPixelToPixelASCII(pixel color.Color, options *ASCIIOptions) CharPixel
 }
 
 // PixelASCIIConverter responsible for pixel ascii conversion
@@ -62,7 +62,7 @@ type PixelASCIIConverter struct {
 }
 
 // ConvertPixelToPixelASCII convert a image pixel to CharPixel
-func (converter PixelASCIIConverter) ConvertPixelToPixelASCII(pixel color.Color, options *Options) CharPixel {
+func (converter PixelASCIIConverter) ConvertPixelToPixelASCII(pixel color.Color, options *ASCIIOptions) CharPixel {
 	convertOptions := NewOptions()
 	convertOptions.mergeOptions(options)
 
@@ -89,7 +89,7 @@ func (converter PixelASCIIConverter) ConvertPixelToPixelASCII(pixel color.Color,
 }
 
 // ConvertPixelToASCII converts a pixel to a ASCII char string
-func (converter PixelASCIIConverter) ConvertPixelToASCII(pixel color.Color, options *Options) string {
+func (converter PixelASCIIConverter) ConvertPixelToASCII(pixel color.Color, options *ASCIIOptions) string {
 	convertOptions := NewOptions()
 	convertOptions.mergeOptions(options)
 

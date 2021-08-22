@@ -2,7 +2,6 @@ package convert
 
 import (
 	"bytes"
-	"github.com/Enviy/pokedexProject/ascii"
 	"image"
 	"image/color"
 	// Support decode jpeg image
@@ -37,7 +36,7 @@ var DefaultOptions = Options{
 func NewImageConverter() *ImageConverter {
 	return &ImageConverter{
 		resizeHandler:  NewResizeHandler(),
-		pixelConverter: ascii.NewPixelConverter(),
+		pixelConverter: NewPixelConverter(),
 	}
 }
 
@@ -51,7 +50,7 @@ type Converter interface {
 // to image conversion
 type ImageConverter struct {
 	resizeHandler  ResizeHandler
-	pixelConverter ascii.PixelConverter
+	pixelConverter PixelConverter
 }
 
 // Image2ASCIIMatrix converts a image to ASCII matrix
@@ -66,7 +65,7 @@ func (converter *ImageConverter) Image2ASCIIMatrix(image image.Image, imageConve
 		for j := 0; j < int(newWidth); j++ {
 			pixel := color.NRGBAModel.Convert(newImage.At(j, i))
 			// Convert the pixel to ascii char
-			pixelConvertOptions := ascii.NewOptions()
+			pixelConvertOptions := NewOptions()
 			pixelConvertOptions.Colored = imageConvertOptions.Colored
 			pixelConvertOptions.Reversed = imageConvertOptions.Reversed
 			rawChar := converter.pixelConverter.ConvertPixelToASCII(pixel, &pixelConvertOptions)
