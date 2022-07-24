@@ -14,14 +14,14 @@ type Species struct {
 	URL string `json:"url"`
 }
 
-// Stats .
+// Stats defines stat metadata.
 type Stats struct {
 	BaseStat int `json:"base_stat"`
 	Effort int `json:"effort"`
 	Stat Stat `json:"stat"`
 }
 
-// Stat .
+// Stat defines specific name and urls for stats
 type Stat struct {
 	Name string `json:"name"`
 	URL string `json:"url"`
