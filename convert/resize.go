@@ -1,10 +1,11 @@
 package convert
 
 import (
-	"github.com/Enviy/pokedexProject/util"
-	"github.com/nfnt/resize"
 	"image"
 	"log"
+	"pokedexProject/util"
+
+	"github.com/nfnt/resize"
 )
 
 // NewResizeHandler create a new resize handler

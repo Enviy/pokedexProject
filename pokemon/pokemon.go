@@ -1,21 +1,21 @@
 package pokemon
 
 import (
-	"fmt"
-	"log"
 	"bytes"
+	"encoding/json"
+	"fmt"
 	"image"
-	"time"
+	"io/ioutil"
+	"log"
+	"math/rand"
+	"net/http"
+	"pokedexProject/convert"
+	"pokedexProject/models"
+	"pokedexProject/util"
 	"regexp"
 	"strings"
+	"time"
 	"unicode"
-	"math/rand"
-	"encoding/json"
-	"net/http"
-	"io/ioutil"
-	"github.com/Enviy/pokedexProject/models"
-	"github.com/Enviy/pokedexProject/convert"
-	"github.com/Enviy/pokedexProject/util"
 )
 
 // GetBase initial call to api
@@ -56,13 +56,13 @@ func GetArt(artBytes []byte) (string, error) {
 	// initialize convert options
 	dops := convert.DefaultOptions
 	options := &convert.Options{
-		Ratio: dops.Ratio,
-		FixedWidth: dops.FixedWidth,
-		FixedHeight: dops.FixedHeight,
-		FitScreen: dops.FitScreen,
+		Ratio:           dops.Ratio,
+		FixedWidth:      dops.FixedWidth,
+		FixedHeight:     dops.FixedHeight,
+		FitScreen:       dops.FitScreen,
 		StretchedScreen: dops.StretchedScreen,
-		Colored: false,
-		Reversed: dops.Reversed,
+		Colored:         false,
+		Reversed:        dops.Reversed,
 	}
 	converter := convert.NewImageConverter()
 	r := bytes.NewReader(contents)

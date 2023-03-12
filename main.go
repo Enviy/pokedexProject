@@ -1,23 +1,23 @@
 package main
 
 import (
-	"os"
-	"fmt"
 	"bytes"
+	_ "embed"
+	"fmt"
 	"image"
 	"image/color"
 	_ "image/png"
-	_ "embed"
 	"log"
+	"os"
 
-	"Enviy/pokedexProject/util"
-	"Enviy/pokedexProject/pokemon"
+	"pokedexProject/pokemon"
+	"pokedexProject/util"
 
-	"golang.org/x/image/font"
-	"golang.org/x/image/font/opentype"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/examples/resources/fonts"
 	"github.com/hajimehoshi/ebiten/v2/text"
+	"golang.org/x/image/font"
+	"golang.org/x/image/font/opentype"
 )
 
 var img *ebiten.Image
@@ -26,6 +26,7 @@ var artFont font.Face
 
 //go:embed images/pokedex_open.png
 var pokedexImage []byte
+
 //go:embed fonts/SFNSMono.ttf
 var loadedFonts []byte
 
@@ -43,8 +44,8 @@ func init() {
 	}
 	const dpi = 72
 	factsFont, err = opentype.NewFace(tt, &opentype.FaceOptions{
-		Size: 12,
-		DPI: dpi,
+		Size:    12,
+		DPI:     dpi,
 		Hinting: font.HintingFull,
 	})
 	if err != nil {
@@ -55,8 +56,8 @@ func init() {
 		log.Fatal(err)
 	}
 	artFont, err = opentype.NewFace(art_tt, &opentype.FaceOptions{
-		Size: 8,
-		DPI: dpi,
+		Size:    8,
+		DPI:     dpi,
 		Hinting: font.HintingFull,
 	})
 	if err != nil {
@@ -123,7 +124,7 @@ func (g *Game) Update() error {
 			g.text = g.text[:len(g.text)-1]
 		}
 	}
-	g.counter ++
+	g.counter++
 	return nil
 }
 
@@ -132,8 +133,8 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	const (
 		x_facts = 634
 		y_facts = 280
-		x_art = 120
-		y_art = 270
+		x_art   = 120
+		y_art   = 270
 	)
 	screen.DrawImage(img, nil)
 	if !g.newPokemon {
@@ -147,7 +148,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		text.Draw(screen,
 			g.title,
 			artFont,
-			x_art + 30,
+			x_art+30,
 			y_art,
 			color.White)
 	}
@@ -162,7 +163,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		// draw collected facts
 		wrappedFacts := util.WordWrap(g.facts, 50)
 		text.Draw(screen,
-			wrappedFacts + g.text,
+			wrappedFacts+g.text,
 			factsFont,
 			x_facts,
 			y_facts,
@@ -182,7 +183,7 @@ func main() {
 	ebiten.SetWindowTitle("Pokédex")
 	ebiten.SetWindowResizable(true)
 	game := &Game{
-		title: util.Banner(),
+		title:   util.Banner(),
 		counter: 0,
 	}
 	if err := ebiten.RunGame(game); err != nil {
