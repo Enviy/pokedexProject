@@ -12,7 +12,7 @@ The Pokedex generates ascii art of all Pokemon that are searched. If you're on M
 
 Use:
 - This isn't compiled so you will need to have Golang 1.18 (required due to file embedding feature).
-- Go module file go.mod file included may require go mod tidy after fresh pull and Go version update.
+- Run go mod download after a fresh pull and Go version update.
 - This project can be compiled by either building a binary ("go build main.go") or by running the entry point file ("go run main.go").
 - Can be run completely from keyboard inputs. Entering "no" at anytime will exit the program.
 
